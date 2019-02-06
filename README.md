@@ -1,5 +1,5 @@
 # cryptodweet
-[![PyPI version](https://badge.fury.io/py/cryptodweet.svg)](https://badge.fury.io/py/cryptodweet) 
+[![PyPI version](https://badge.fury.io/py/cryptodweet.svg)](https://badge.fury.io/py/cryptodweet) [![Downloads](https://pepy.tech/badge/cryptodweet)](https://pepy.tech/project/cryptodweet)
 
 A simple python package for the free dweet service with encryption.
 
