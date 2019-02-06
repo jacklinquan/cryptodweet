@@ -23,7 +23,7 @@ c6f6a7'}, u'thing': u'9ee9b47833d5a13043c5f47e8802596a', u'transaction': u'7880
 """
 
 # Project version
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __all__ = ['CryptoDweet']
 
 from codecs import encode, decode
@@ -102,23 +102,65 @@ class CryptoDweet(object):
             'unicode_escape'
         )
         
-        latest_dweet_cipher_hexlified = \
+        dweets_list_cipher_hexlified = \
             dweepy.get_latest_dweet_for(thing_cipher_hexlified)
-        content_dict_cipher_hexlified = \
-            latest_dweet_cipher_hexlified[0]['content']
-        content_dict_cipher = {
-            unhexlify(encode(k)) : unhexlify(encode(v)) \
-            for (k, v) in content_dict_cipher_hexlified.items()
-        }
-        content_dict = {
-            decode(cm.decrypt_msg(k), 'unicode_escape') \
-            : decode(cm.decrypt_msg(v), 'unicode_escape') \
-            for (k, v) in content_dict_cipher.items()
-        }
         
-        latest_dweet = latest_dweet_cipher_hexlified
-        latest_dweet[0][u'thing'] = decode(thing, 'unicode_escape')
-        latest_dweet[0][u'content'] = content_dict
+        dweets_list = []
+        for cipher_dweet in dweets_list_cipher_hexlified:
+            content_dict_cipher_hexlified = \
+                cipher_dweet['content']
+            content_dict_cipher = {
+                unhexlify(encode(k)) : unhexlify(encode(v)) \
+                for (k, v) in content_dict_cipher_hexlified.items()
+            }
+            content_dict = {
+                decode(cm.decrypt_msg(k), 'unicode_escape') \
+                : decode(cm.decrypt_msg(v), 'unicode_escape') \
+                for (k, v) in content_dict_cipher.items()
+            }
+            decrypted_dweet = cipher_dweet
+            decrypted_dweet[u'thing'] = decode(thing, 'unicode_escape')
+            decrypted_dweet[u'content'] = content_dict
+            dweets_list.append(decrypted_dweet)
         
-        return latest_dweet
+        return dweets_list
+        
+    def get_dweets_for(self, thing):
+        """The 'get dweets for' API.
+        
+        :param thing: the thing name.
+        :type thing: bytes, str.
+        :returns: the 'get dweets for' result.
+        :rtype: list
+        """
+        cm = CryptoMsg(self.aes_cbc_key, self.aes_cbc_iv)
+        thing_cipher = cm.encrypt_msg(encode(thing))
+        thing_cipher_hexlified = decode(
+            hexlify(thing_cipher),
+            'unicode_escape'
+        )
+        
+        dweets_list_cipher_hexlified = \
+            dweepy.get_dweets_for(thing_cipher_hexlified)
+        
+        dweets_list = []
+        for cipher_dweet in dweets_list_cipher_hexlified:
+            content_dict_cipher_hexlified = \
+                cipher_dweet['content']
+            content_dict_cipher = {
+                unhexlify(encode(k)) : unhexlify(encode(v)) \
+                for (k, v) in content_dict_cipher_hexlified.items()
+            }
+            content_dict = {
+                decode(cm.decrypt_msg(k), 'unicode_escape') \
+                : decode(cm.decrypt_msg(v), 'unicode_escape') \
+                for (k, v) in content_dict_cipher.items()
+            }
+            decrypted_dweet = cipher_dweet
+            decrypted_dweet[u'thing'] = decode(thing, 'unicode_escape')
+            decrypted_dweet[u'content'] = content_dict
+            dweets_list.append(decrypted_dweet)
+        
+        return dweets_list
+    
     
