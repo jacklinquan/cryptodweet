@@ -23,7 +23,7 @@ c6f6a7'}, u'thing': u'9ee9b47833d5a13043c5f47e8802596a', u'transaction': u'7880
 """
 
 # Project version
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 __all__ = ['CryptoDweet']
 
 from codecs import encode, decode
@@ -64,16 +64,19 @@ class CryptoDweet(object):
         :returns: the 'dweet for' result.
         :rtype: dict
         """
-        cm = CryptoMsg(self.aes_cbc_key, self.aes_cbc_iv)
-        thing_cipher = cm.encrypt_msg(encode(thing))
+        cm = CryptoMsg(
+            encode(decode(self.aes_cbc_key, 'unicode_escape')),
+            encode(decode(self.aes_cbc_iv, 'unicode_escape'))
+        )
+        thing_cipher = cm.encrypt_msg(encode(decode(thing, 'unicode_escape')))
         thing_cipher_hexlified = decode(
             hexlify(thing_cipher),
             'unicode_escape'
         )
         
         content_dict_cipher = {
-            cm.encrypt_msg(encode(k)) \
-            : cm.encrypt_msg(encode(v)) \
+            cm.encrypt_msg(encode(decode(k, 'unicode_escape'))) \
+            : cm.encrypt_msg(encode(decode(v, 'unicode_escape'))) \
             for (k, v) in content_dict.items()
         }
         content_dict_cipher_hexlified = {
@@ -95,8 +98,11 @@ class CryptoDweet(object):
         :returns: the 'get latest dweet for' result.
         :rtype: list
         """
-        cm = CryptoMsg(self.aes_cbc_key, self.aes_cbc_iv)
-        thing_cipher = cm.encrypt_msg(encode(thing))
+        cm = CryptoMsg(
+            encode(decode(self.aes_cbc_key, 'unicode_escape')),
+            encode(decode(self.aes_cbc_iv, 'unicode_escape'))
+        )
+        thing_cipher = cm.encrypt_msg(encode(decode(thing, 'unicode_escape')))
         thing_cipher_hexlified = decode(
             hexlify(thing_cipher),
             'unicode_escape'
@@ -133,8 +139,11 @@ class CryptoDweet(object):
         :returns: the 'get dweets for' result.
         :rtype: list
         """
-        cm = CryptoMsg(self.aes_cbc_key, self.aes_cbc_iv)
-        thing_cipher = cm.encrypt_msg(encode(thing))
+        cm = CryptoMsg(
+            encode(decode(self.aes_cbc_key, 'unicode_escape')),
+            encode(decode(self.aes_cbc_iv, 'unicode_escape'))
+        )
+        thing_cipher = cm.encrypt_msg(encode(decode(thing, 'unicode_escape')))
         thing_cipher_hexlified = decode(
             hexlify(thing_cipher),
             'unicode_escape'

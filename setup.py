@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="cryptodweet",
-    version="0.1.1",
+    version="0.1.2",
     description="A simple python package for the free dweet service with " + \
         "encryption.",
     long_description="https://github.com/jacklinquan/cryptodweet",
