@@ -7,7 +7,7 @@ Dweet is a simple machine-to-machine (M2M) service from https://dweet.io/ .
 The free service is public and any data is accessible by anyone.
 This package adds encryption to it and make it a bit more secure.
 Only the minimal APIs are supported.
-Only bytes and str types are supported.
+Only str type is supported.
 
 Please consider [![Paypal Donate](https://github.com/jacklinquan/images/blob/master/paypal_donate_button_200x80.png)](https://www.paypal.me/jacklinquan) to support me.
 
