@@ -1,18 +1,5 @@
 # cryptodweet
 
-[![PayPal Donate][paypal_img]][paypal_link]
-[![PyPI version][pypi_img]][pypi_link]
-[![Downloads][downloads_img]][downloads_link]
-
-  [paypal_img]: https://github.com/jacklinquan/images/blob/master/paypal_donate_badge.svg
-  [paypal_link]: https://www.paypal.me/jacklinquan
-  [pypi_img]: https://badge.fury.io/py/cryptodweet.svg
-  [pypi_link]: https://badge.fury.io/py/cryptodweet
-  [downloads_img]: https://pepy.tech/badge/cryptodweet
-  [downloads_link]: https://pepy.tech/project/cryptodweet
-
-[Documentation](https://jacklinquan.github.io/cryptodweet)
-
 A python module for very basic APIs of the free dweet service with encryption.
 
 Dweet is a simple machine-to-machine (M2M) service from https://dweet.io/ .
